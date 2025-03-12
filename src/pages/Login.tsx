@@ -1,25 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import authApi from "../api/authApi";
 
 const Login: React.FC = () => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const navigate = useNavigate();
+    const handleLogin = async (e: React.FormEvent) => {
+        e.preventDefault();
+        try {
+            const response = await authApi.login(email, password);
+            console.log("Đăng nhập thành công:", response);
+            // Chuyển đến trang home
+            navigate("/");
+        } catch (error: any) {
+            console.error("Lỗi:", error);
+        }
+    }
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-900">
             <div className="bg-gray-800 p-8 rounded-lg shadow-lg max-w-sm w-full">
                 <h2 className="text-2xl font-semibold text-yellow-400 text-center mb-4">Đăng nhập</h2>
 
                 {/* Form */}
-                <form>
+                <form onSubmit={handleLogin}>
                     {/* Tên đăng nhập */}
                     <div className="mb-4">
-                        <label className="block text-gray-400 mb-1">Tên đăng nhập</label>
+                        <label className="block text-gray-400 mb-1">Email</label>
                         <div className="flex items-center border border-gray-600 rounded-md bg-gray-700 p-2">
                             <FontAwesomeIcon icon={faUser} className="text-gray-400 mr-2" />
                             <input
                                 type="text"
-                                placeholder="Nhập tên đăng nhập"
+                                placeholder="Nhập email"
                                 className="bg-transparent outline-none flex-1 text-white"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                             />
                         </div>
                     </div>
@@ -33,6 +50,8 @@ const Login: React.FC = () => {
                                 type="password"
                                 placeholder="Nhập mật khẩu"
                                 className="bg-transparent outline-none flex-1 text-white"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
                             />
                         </div>
                     </div>
