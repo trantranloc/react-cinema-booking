@@ -22,20 +22,33 @@ export default function Home() {
                 <h1 className="text-2xl font-bold flex items-center gap-2">
                     <FontAwesomeIcon icon={faFilm} /> Cinema Booking
                 </h1>
-                <button className="bg-red-500 px-4 py-2 rounded flex items-center gap-2">
-                    <FontAwesomeIcon icon={faTicketAlt} /> Đặt Vé
-                </button>
-                <button className="bg-red-500 px-4 py-2 rounded flex items-center gap-2">
-                    <FontAwesomeIcon icon={faEye} /> Chi Tiết
-                </button>
             </nav>
 
             {/* Banner */}
-            <div className="relative w-full h-64 bg-gray-700 flex items-center justify-center">
+            
+            {/* <div className="relative w-full h-64 bg-gray-700 flex items-center justify-center">
                 <h2 className="text-4xl font-bold">Xem phim ngay hôm nay!</h2>
                 <FontAwesomeIcon icon={faPlayCircle} className="absolute right-5 bottom-5 text-4xl text-red-500 cursor-pointer" />
-            </div>
-
+            </div> */}
+            <Swiper
+                spaceBetween={20}
+                slidesPerView={1}
+                breakpoints={{
+                    1024: { slidesPerView: 1 },
+                }}
+                pagination={{ clickable: true }}
+                modules={[Pagination]}
+                className="mySwiper"
+            >
+                {movies.map((movie) => (
+                    <SwiperSlide key={movie.id}>
+                        <div className="relative w-full h-64 bg-gray-700 flex items-center justify-center">
+                            <h2 className="text-4xl font-bold">Xem phim ngay hôm nay!</h2>
+                            <FontAwesomeIcon icon={faPlayCircle} className="absolute right-5 bottom-5 text-4xl text-red-500 cursor-pointer" />
+                        </div>
+                    </SwiperSlide>
+                ))}
+            </Swiper>
             {/* Danh sách phim */}
             <div className="p-6">
                 <h2 className="text-2xl font-bold mb-4">Phim Đang Chiếu</h2>
